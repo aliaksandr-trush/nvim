@@ -44,6 +44,8 @@ P.S. You can delete this when you're done too. It's your config now :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+vim.o.matchpairs = "(:),{:},[:],<:>"
+
 vim.o.showtabline = 1
 
 vim.o.foldcolumn = "auto:3"
@@ -198,17 +200,17 @@ require('lazy').setup({
     },
   },
 
-  {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 1000,
-    config = function()
-      require('onedark').setup({
-        transparent = true
-      })
-      vim.cmd.colorscheme 'onedark'
-    end,
-  },
+  -- {
+  --   -- Theme inspired by Atom
+  --   'navarasu/onedark.nvim',
+  --   priority = 1000,
+  --   config = function()
+  --     require('onedark').setup({
+  --       transparent = true
+  --     })
+  --     vim.cmd.colorscheme 'onedark'
+  --   end,
+  -- },
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -286,6 +288,7 @@ require('lazy').setup({
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
+-- vim.notify = require("notify")
 -- Set highlight on search
 vim.o.hlsearch = false
 vim.o.ignorecase = true
@@ -684,6 +687,9 @@ cmp.setup {
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- [Setup Marks ]
+require("marks").setup()
+
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 
@@ -693,7 +699,7 @@ require("nvim-tree").setup({
 })
 -- require("oil").setup()
 
-vim.keymap.set('n', '<leader>t', require('nvim-tree.api').tree.toggle, { desc = 'Open TreeView' })
+vim.keymap.set('n', '<leader>tt', require('nvim-tree.api').tree.toggle, { desc = 'Toggle TreeView' })
 -- vim.keymap.set('n', '<leader>t', require('oil').open_float, { desc = 'Open TreeView' })
 
 -- [Setup keys for maps iteraction ]
@@ -703,9 +709,14 @@ vim.keymap.set('n', '<A-n>', vim.cmd.tabn, { desc = "Next tab" })
 vim.keymap.set('n', '<A-p>', vim.cmd.tabn, { desc = "Previous tab" })
 
 require('catppuccin').setup({
-  transparent_background = true,
+  -- transparent_background = true,
+  integrations = {
+    notify = true,
+  }
 })
 -- vim.cmd.colorscheme 'catppuccin'
-vim.cmd.colorscheme 'onedark'
+-- vim.cmd.colorscheme 'onedark'
+vim.cmd.colorscheme 'tokyonight'
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
