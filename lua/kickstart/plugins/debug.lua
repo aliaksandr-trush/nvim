@@ -20,6 +20,8 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+    'vadimcn/codelldb',
+    -- 'microsoft/vscode-cpptools',
   },
   config = function()
     local dap = require 'dap'
@@ -39,6 +41,7 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
+        'codelldb',
       },
     }
 
@@ -83,5 +86,47 @@ return {
 
     -- Install golang specific config
     require('dap-go').setup()
+    local codelldb_path = '/home/aliaksandr/.local/share/nvim/mason/bin/codelldb'
+    -- local mason_registry = require('mason-registry')
+    -- for pck in mason_registry.get_all_package_names() do
+    --   print(pck)
+    -- end
+    --
+    -- local codelldb = mason_registry.get_package("codelldb") -- note that this will error if you provide a non-existent package name
+    --
+    -- local codelldb_path = codelldb:get_install_path() .. "/codelldb"
+    dap.adapters.codelldb = {
+      type = 'server',
+      port = "${port}",
+      executable = {
+        -- command = '/usr/bin/codelldb',
+        command = codelldb_path,
+        args = { "--port", "${port}" },
+      }
+    }
+
+    dap.adapters.lldb = {
+      type = 'executable',
+      command = '/usr/bin/lldb-vscode',
+      name = 'lldb',
+    }
+
+    dap.configurations.rust = {
+      {
+        name = "Rust debug",
+        type = "codelldb",
+        -- type = "lldb",
+        request = "launch",
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
+        end,
+        -- cargo = {
+        --   args = { "test", "--no-rerun", "--lib" }
+        -- },
+        cwd = '${workspaceFolder}',
+        stopOnEntry = true,
+        showDisassembly = "never",
+      },
+    }
   end,
 }
