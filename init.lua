@@ -48,7 +48,11 @@ vim.o.matchpairs = "(:),{:},[:],<:>"
 
 vim.o.showtabline = 1
 
-vim.o.foldcolumn = "auto:3"
+-- vim.o.foldcolumn = "auto:3"
+vim.o.foldcolumn = "1"
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
@@ -428,6 +432,7 @@ end
 vim.keymap.set('n', '<leader>s/', telescope_live_grep_open_files, { desc = '[S]earch [/] in Open Files' })
 vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin, { desc = '[S]earch [S]elect Telescope' })
 vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
+vim.keymap.set('n', '<leader>gl', require('lazygit').lazygit, { desc = 'Open [G]it\'s [L]azygit' })
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
@@ -561,6 +566,7 @@ require('which-key').register {
   ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
   ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
   ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
+  ['<leader>f'] = { name = '[F]ind', _ = 'which_key_ignore' },
   ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
   ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
   ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
@@ -579,6 +585,7 @@ require('which-key').register({
 require('mason').setup()
 require('mason-lspconfig').setup()
 
+require('ufo').setup()
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 --
@@ -700,7 +707,7 @@ require("nvim-tree").setup({
 -- require("oil").setup()
 
 vim.keymap.set('n', '<leader>tt', require('nvim-tree.api').tree.toggle, { desc = 'Toggle TreeView' })
--- vim.keymap.set('n', '<leader>t', require('oil').open_float, { desc = 'Open TreeView' })
+vim.keymap.set('n', '<leader>ff', require('nvim-tree.api').tree.find_file, { desc = '[F]ind [f]ile in TreeView' })
 
 -- [Setup keys for maps iteraction ]
 vim.keymap.set('n', '<A-t>', vim.cmd.tabnew, { desc = 'Open new tab' })
