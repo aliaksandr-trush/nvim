@@ -1,43 +1,3 @@
---[[
-
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-
-Kickstart.nvim is *not* a distribution.
-
-Kickstart.nvim is a template for your own configuration.
-  The goal is that you can read every line of code, top-to-bottom, understand
-  what your configuration is doing, and modify it to suit your needs.
-
-  Once you've done that, you should start exploring, configuring and tinkering to
-  explore Neovim!
-
-  If you don't know anything about Lua, I recommend taking some time to read through
-  a guide. One possible example:
-  - https://learnxinyminutes.com/docs/lua/
-
-
-  And then you can explore or search through `:help lua-guide`
-  - https://neovim.io/doc/user/lua-guide.html
-
-
-Kickstart Guide:
-
-I have left several `:help X` comments throughout the init.lua
-You should run that command and read that help section for more information.
-
-In addition, I have some `NOTE:` items throughout the file.
-These are for you, the reader to help understand what is happening. Feel free to delete
-them once you know what you're doing, but they should serve as a guide for when you
-are first encountering a few different constructs in your nvim config.
-
-I hope you enjoy your Neovim journey,
-- TJ
-
-P.S. You can delete this when you're done too. It's your config now :)
---]]
-
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -53,6 +13,9 @@ vim.o.foldcolumn = "1"
 vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
+
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
@@ -97,8 +60,7 @@ require('lazy').setup({
       'williamboman/mason-lspconfig.nvim',
 
       -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -204,33 +166,6 @@ require('lazy').setup({
     },
   },
 
-  -- {
-  --   -- Theme inspired by Atom
-  --   'navarasu/onedark.nvim',
-  --   priority = 1000,
-  --   config = function()
-  --     require('onedark').setup({
-  --       transparent = true
-  --     })
-  --     vim.cmd.colorscheme 'onedark'
-  --   end,
-  -- },
-  {
-    -- Set lualine as statusline
-    'nvim-lualine/lualine.nvim',
-    -- See `:help lualine.txt`
-    opts = {
-      options = {
-        icons_enabled = true,
-        -- theme = 'onedark',
-        -- theme = 'catppuccin',
-        theme = 'auto'
-        -- component_separators = '|',
-        -- section_separators = '',
-      },
-    },
-  },
-
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
@@ -292,7 +227,6 @@ require('lazy').setup({
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
--- vim.notify = require("notify")
 -- Set highlight on search
 vim.o.hlsearch = false
 vim.o.ignorecase = true
@@ -585,27 +519,6 @@ require('which-key').register({
 require('mason').setup()
 require('mason-lspconfig').setup()
 
-require('ufo').setup()
-
--- [[ Configure Noice ]]
-require("noice").setup({
-  lsp = {
-    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-    override = {
-      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-      ["vim.lsp.util.stylize_markdown"] = true,
-      ["cmp.entry.get_documentation"] = true,
-    },
-  },
-  -- you can enable a preset for easier configuration
-  presets = {
-    bottom_search = true,         -- use a classic bottom cmdline for search
-    command_palette = true,       -- position the cmdline and popupmenu together
-    long_message_to_split = true, -- long messages will be sent to a split
-    inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-    lsp_doc_border = false,       -- add a border to hover docs and signature help
-  },
-})
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 --
@@ -709,41 +622,14 @@ cmp.setup {
   },
 }
 
--- [Setup NVimTree ]
--- disable netrw at the very start of your init.lua
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
--- [Setup Marks ]
-require("marks").setup()
-
--- set termguicolors to enable highlight groups
-vim.opt.termguicolors = true
-
--- empty setup using defaults
-require("nvim-tree").setup({
-  hijack_cursor = true,
-})
--- require("oil").setup()
-
-vim.keymap.set('n', '<leader>tt', require('nvim-tree.api').tree.toggle, { desc = 'Toggle TreeView' })
-vim.keymap.set('n', '<leader>ff', require('nvim-tree.api').tree.find_file, { desc = '[F]ind [f]ile in TreeView' })
-
 -- [Setup keys for maps iteraction ]
 vim.keymap.set('n', '<A-t>', vim.cmd.tabnew, { desc = 'Open new tab' })
 vim.keymap.set('n', '<A-q>', vim.cmd.tabclose, { desc = "Close tab" })
 vim.keymap.set('n', '<A-n>', vim.cmd.tabn, { desc = "Next tab" })
-vim.keymap.set('n', '<A-p>', vim.cmd.tabn, { desc = "Previous tab" })
+vim.keymap.set('n', '<A-p>', vim.cmd.tabp, { desc = "Previous tab" })
 
-require('catppuccin').setup({
-  -- transparent_background = true,
-  integrations = {
-    notify = true,
-  }
-})
--- vim.cmd.colorscheme 'catppuccin'
--- vim.cmd.colorscheme 'onedark'
-vim.cmd.colorscheme 'tokyonight'
+vim.cmd.colorscheme 'catppuccin'
+-- vim.cmd.colorscheme 'tokyonight'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
