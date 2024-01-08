@@ -437,15 +437,15 @@ vim.defer_fn(function()
           ['[]'] = '@class.outer',
         },
       },
-      swap = {
-        enable = true,
-        swap_next = {
-          ['<leader>a'] = '@parameter.inner',
-        },
-        swap_previous = {
-          ['<leader>A'] = '@parameter.inner',
-        },
-      },
+      -- swap = {
+      --   enable = true,
+      --   swap_next = {
+      --     ['<leader>a'] = '@parameter.inner',
+      --   },
+      --   swap_previous = {
+      --     ['<leader>A'] = '@parameter.inner',
+      --   },
+      -- },
     },
   }
 end, 0)
@@ -479,7 +479,7 @@ local on_attach = function(_, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -628,7 +628,26 @@ vim.keymap.set('n', '<A-q>', vim.cmd.tabclose, { desc = "Close tab" })
 vim.keymap.set('n', '<A-n>', vim.cmd.tabn, { desc = "Next tab" })
 vim.keymap.set('n', '<A-p>', vim.cmd.tabp, { desc = "Previous tab" })
 
-vim.cmd.colorscheme 'catppuccin'
+local harpoon = require("harpoon")
+
+-- REQUIRED
+harpoon:setup({})
+-- REQUIRED
+
+vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end)
+vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "<C-j>", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "<C-k>", function() harpoon:list():select(3) end)
+vim.keymap.set("n", "<C-l>", function() harpoon:list():select(4) end)
+
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
+
+-- vim.cmd.colorscheme 'catppuccin'
+vim.cmd.colorscheme 'kanagawa'
 -- vim.cmd.colorscheme 'tokyonight'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
