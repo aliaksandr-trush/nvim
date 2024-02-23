@@ -1,6 +1,7 @@
 return {
   {
     "olimorris/persisted.nvim",
+    enabled = false,
     config = function()
       require("persisted").setup({
         autoload = true,

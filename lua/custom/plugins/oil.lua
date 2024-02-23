@@ -1,0 +1,13 @@
+return {
+  'stevearc/oil.nvim',
+  lazy = false,
+  opts = {
+    keymaps = {
+      ["q"] = "actions.close",
+    },
+  },
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  keys = {
+    { "-", "<cmd>lua require('oil').open_float()<cr>", desc = "Oil" },
+  },
+}

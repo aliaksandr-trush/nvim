@@ -6,7 +6,10 @@ return {
     "rebelot/kanagawa.nvim",
     priority = 1000,
     lazy = false,
-    opts = {},
+    opts = {
+      -- transparent = true,
+      compile = true,
+    },
   },
   { "EdenEast/nightfox.nvim" },
   {
@@ -25,5 +28,10 @@ return {
         notify = true,
       }
     },
+  },
+  {
+    "Mofiqul/adwaita.nvim",
+    lazy = false,
+    priority = 1000,
   },
 }
