@@ -19,9 +19,9 @@ return {
       -- add any custom options here
     },
     keys = {
-      { '<leader>qs', '<cmd>lua require("persistence").load()<cr>',                desc = "Load session" },
-      { '<leader>ql', '<cmd>lua require("persistence").load({ last = true })<cr>', desc = "Load last session" },
-      { '<leader>qd', '<cmd>lua require("persistence").stop()<cr>',                desc = "Do not save session" },
+      { '<leader>ps', '<cmd>lua require("persistence").load()<cr>',                desc = "Load session" },
+      { '<leader>pl', '<cmd>lua require("persistence").load({ last = true })<cr>', desc = "Load last session" },
+      { '<leader>pd', '<cmd>lua require("persistence").stop()<cr>',                desc = "Do not save session" },
     },
   }
 }
