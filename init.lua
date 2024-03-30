@@ -4,6 +4,8 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+require 'options'
+
 require 'lazy-bootstrap'
 
 -- [[ Configure plugins ]]
@@ -28,8 +30,6 @@ require('lazy').setup({
 
   { import = 'custom.plugins' },
 }, {})
-
-require 'options'
 
 require 'keymap'
 

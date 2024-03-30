@@ -4,6 +4,8 @@ return {
   opts = {
     keymaps = {
       ["q"] = "actions.close",
+      ["<C-v>"] = "actions.select_vsplit",
+      ["<C-s>"] = "actions.select_split",
     },
   },
   dependencies = { "nvim-tree/nvim-web-devicons" },

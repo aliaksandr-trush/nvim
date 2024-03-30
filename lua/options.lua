@@ -4,10 +4,6 @@ vim.o.showtabline = 1
 vim.o.cursorline = true
 vim.o.so = 3
 
-vim.o.foldcolumn = "1"
-vim.o.foldenable = true
-vim.o.foldlevel = 99
-vim.o.foldlevelstart = 99
 
 -- Set highlight on search
 vim.o.hlsearch = true
@@ -36,6 +32,12 @@ vim.o.swapfile = false
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
+-- Sets how neovim will display certain whitespace in the editor.
+--  See :help 'list'
+--  and :help 'listchars'
+vim.opt.list = true
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+
 -- Keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
 
@@ -46,8 +48,10 @@ vim.o.timeoutlen = 300
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
+vim.opt.inccommand = 'split'
+
 -- NOTE: You should make sure your terminal supports this
--- vim.o.termguicolors = true
+vim.o.termguicolors = true
 vim.o.colorcolumn = "80"
 
 vim.o.splitbelow = true

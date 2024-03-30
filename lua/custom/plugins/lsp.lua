@@ -34,7 +34,7 @@ return {
 
         -- See `:help K` for why this keymap
         nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-        -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+        nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
         -- Lesser used LSP functionality
         nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -49,23 +49,6 @@ return {
           vim.lsp.buf.format()
         end, { desc = 'Format current buffer with LSP' })
 
-        -- The following two autocommands are used to highlight references of the
-        -- word under your cursor when your cursor rests there for a little while.
-        --    See `:help CursorHold` for information about when this is executed
-        --
-        -- When you move your cursor, the highlights will be cleared (the second autocommand).
-        local client = vim.lsp.get_client_by_id(event.data.client_id)
-        if client and client.server_capabilities.documentHighlightProvider then
-          vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-            buffer = event.buf,
-            callback = vim.lsp.buf.document_highlight,
-          })
-
-          vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-            buffer = event.buf,
-            callback = vim.lsp.buf.clear_references,
-          })
-        end
       end,
     })
 
@@ -83,7 +66,7 @@ return {
     --  define the property 'filetypes' to the map in question.
     local servers = {
       gopls = {},
-      pyright = {},
+      basedpyright = {},
       ruff_lsp = {},
       rust_analyzer = {},
 
@@ -100,7 +83,11 @@ return {
     -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
+    -- Add folding capabilities required by ufo.nvim
+    capabilities.textDocument.foldingRange = {
+      dynamicRegistration = false,
+      lineFoldingOnly = true,
+    }
     require('mason-lspconfig').setup {
       ensure_installed = vim.tbl_keys(servers),
       handlers = {
