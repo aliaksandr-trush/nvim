@@ -43,12 +43,12 @@ return {
         nmap('<leader>wl', function()
           print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end, '[W]orkspace [L]ist Folders')
+        nmap('<leader>cf', vim.lsp.buf.format, '[C]ode [F]ormat')
 
         -- Create a command `:Format` local to the LSP buffer
         vim.api.nvim_buf_create_user_command(event.buf, 'Format', function(_)
           vim.lsp.buf.format()
         end, { desc = 'Format current buffer with LSP' })
-
       end,
     })
 

@@ -9,9 +9,13 @@ return {
     -- Adds LSP completion capabilities
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
+    'hrsh7th/cmp-buffer',
 
     -- Adds a number of user-friendly snippets
     'rafamadriz/friendly-snippets',
+
+    -- Icons
+    'onsails/lspkind-nvim',
   },
   config = function()
     -- [[ Configure nvim-cmp ]]
@@ -52,9 +56,19 @@ return {
         end, { 'i', 's' }),
       },
       sources = {
+        { name = 'codeium' },
         { name = 'luasnip',  max_item_count = 5 },
         { name = 'nvim_lsp', max_item_count = 10 },
         { name = 'path',     max_item_count = 5 },
+        { name = 'buffer',   max_item_count = 5 },
+      },
+      formatting = {
+        format = require('lspkind').cmp_format({
+          mode = 'symbol_text',
+          maxwidth = 50,
+          ellipsis_char = '...',
+          symbol_map = { Codeium = "", }
+        }),
       },
     }
   end
