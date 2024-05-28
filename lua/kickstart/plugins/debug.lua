@@ -12,7 +12,10 @@ return {
   -- NOTE: And you can specify dependencies as well
   dependencies = {
     -- Creates a beautiful debugger UI
-    'rcarriga/nvim-dap-ui',
+    {
+      'rcarriga/nvim-dap-ui',
+      dependencies = { "nvim-neotest/nvim-nio" }
+    },
 
     -- Installs the debug adapters for you
     'williamboman/mason.nvim',
@@ -30,7 +33,7 @@ return {
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
       -- reasonable debug configurations
-      automatic_setup = true,
+      automatic_installation = true,
 
       -- You can provide additional configuration to the handlers,
       -- see mason-nvim-dap README for more information
@@ -100,8 +103,7 @@ return {
       type = 'server',
       port = "${port}",
       executable = {
-        -- command = '/usr/bin/codelldb',
-        command = codelldb_path,
+        command = 'codelldb',
         args = { "--port", "${port}" },
       }
     }
@@ -116,7 +118,6 @@ return {
       {
         name = "Rust debug",
         type = "codelldb",
-        -- type = "lldb",
         request = "launch",
         program = function()
           return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')

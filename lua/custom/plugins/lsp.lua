@@ -44,6 +44,11 @@ return {
           print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end, '[W]orkspace [L]ist Folders')
         nmap('<leader>cf', vim.lsp.buf.format, '[C]ode [F]ormat')
+        if vim.lsp.inlay_hint then
+          nmap('<leader>th', function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
+          end, '[T]oggle [H]ints')
+        end
 
         -- Create a command `:Format` local to the LSP buffer
         vim.api.nvim_buf_create_user_command(event.buf, 'Format', function(_)

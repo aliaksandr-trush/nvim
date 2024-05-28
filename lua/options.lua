@@ -2,7 +2,7 @@ vim.o.matchpairs = "(:),{:},[:],<:>"
 
 vim.o.showtabline = 1
 vim.o.cursorline = true
-vim.o.so = 3
+vim.o.so = 5
 
 
 -- Set highlight on search

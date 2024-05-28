@@ -22,14 +22,14 @@ require('lazy').setup({
     opts = {},
   },
 
-  -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',  opts = {} },
 
   require 'kickstart.plugins.autoformat',
   require 'kickstart.plugins.debug',
 
   { import = 'custom.plugins' },
-}, {})
+}, {
+  dev = { path = "~/Projects/" }
+})
 
 require 'keymap'
 

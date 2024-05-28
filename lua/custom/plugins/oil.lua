@@ -2,6 +2,7 @@ return {
   'stevearc/oil.nvim',
   lazy = false,
   opts = {
+    default_file_explorer = true,
     keymaps = {
       ["q"] = "actions.close",
       ["<C-v>"] = "actions.select_vsplit",

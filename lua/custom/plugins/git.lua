@@ -8,6 +8,10 @@ return {
     keys = {
       { '<leader>gl', "<cmd>lua require('lazygit').lazygit()<cr>", desc = 'Open [G]it\'s [L]azygit' },
     },
+    config = function()
+      vim.g.lazygit_floating_window_use_plenary = 1
+      vim.g.lazygit_use_neovim_remote = 0
+    end
   },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes

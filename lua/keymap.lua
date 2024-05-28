@@ -3,6 +3,19 @@
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", {expr = true, silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr = true, silent = true })
 
+vim.keymap.set('n', '<M-l>', '<C-w>5>')
+vim.keymap.set('n', '<M-h>', '<C-w>5<')
+vim.keymap.set('n', '<M-k>', '<C-w>+')
+vim.keymap.set('n', '<M-j>', '<C-w>-')
+
+vim.keymap.set('n', '<C-Right>', '<C-w>5>')
+vim.keymap.set('n', '<C-Left>', '<C-w>5<')
+vim.keymap.set('n', '<C-Up>', '<C-w>+')
+vim.keymap.set('n', '<C-Down>', '<C-w>-')
+
+vim.keymap.set('v', '>', '>gv')
+vim.keymap.set('v', '<', '<gv')
+
 vim.keymap.set('n', 'n', 'nzz')
 vim.keymap.set('n', 'N', 'Nzz')
 vim.keymap.set('n', '<C-o>', '<C-o>zz')
@@ -10,11 +23,9 @@ vim.keymap.set('n', '<C-i>', '<C-i>zz')
 
 vim.keymap.set('n', '<esc>', '<cmd>:nohl<cr>')
 vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Escape Escape exits terminal mode' })
+vim.keymap.set('n', '<leader>tt', '<cmd>:vsplit term://bash<cr>a', { desc = 'Open terminal' })
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- Keybinds to make split navigation easier.

@@ -40,8 +40,9 @@ return {
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete {},
+        ['<C-x>'] = cmp.mapping.close(),
         ['<C-y>'] = cmp.mapping.confirm {
-          behavior = cmp.ConfirmBehavior.Replace,
+          behavior = cmp.ConfirmBehavior.Insert,
           select = true,
         },
         ['<C-l>'] = cmp.mapping(function()
@@ -63,8 +64,10 @@ return {
         { name = 'buffer',   max_item_count = 5 },
       },
       formatting = {
+        fields = { 'kind', 'abbr', 'menu' },
+        expandable_indicator = true,
         format = require('lspkind').cmp_format({
-          mode = 'symbol_text',
+          mode = 'symbol',
           maxwidth = 50,
           ellipsis_char = '...',
           symbol_map = { Codeium = "", }
