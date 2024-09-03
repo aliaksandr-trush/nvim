@@ -7,10 +7,17 @@ return {
     'williamboman/mason-lspconfig.nvim',
 
     -- Useful status updates for LSP
-    { 'j-hui/fidget.nvim', opts = {} },
+    { 'j-hui/fidget.nvim',    opts = {} },
 
     -- Additional lua configuration, makes nvim stuff amazing!
-    { 'folke/neodev.nvim', opts = {} },
+    {
+      'folke/lazydev.nvim',
+      opts = {
+        library = { 'luvit-meta/library' }
+      },
+      ft = 'lua'
+    },
+    { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
   },
   config = function()
     vim.api.nvim_create_autocmd('LspAttach', {
@@ -73,7 +80,10 @@ return {
       gopls = {},
       basedpyright = {},
       ruff_lsp = {},
-      rust_analyzer = {},
+      ruff = {},
+      rust_analyzer = {
+        Cargo = { targetDir = true },
+      },
 
       lua_ls = {
         Lua = {

@@ -22,7 +22,7 @@ vim.keymap.set('n', '<C-o>', '<C-o>zz')
 vim.keymap.set('n', '<C-i>', '<C-i>zz')
 
 vim.keymap.set('n', '<esc>', '<cmd>:nohl<cr>')
-vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Escape Escape exits terminal mode' })
+-- vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Escape Escape exits terminal mode' })
 vim.keymap.set('n', '<leader>tt', '<cmd>:vsplit term://bash<cr>a', { desc = 'Open terminal' })
 
 -- Diagnostic keymaps

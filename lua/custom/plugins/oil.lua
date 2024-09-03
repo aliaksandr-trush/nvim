@@ -3,6 +3,7 @@ return {
   lazy = false,
   opts = {
     default_file_explorer = true,
+    skip_confirm_for_simple_edits = true,
     keymaps = {
       ["q"] = "actions.close",
       ["<C-v>"] = "actions.select_vsplit",
