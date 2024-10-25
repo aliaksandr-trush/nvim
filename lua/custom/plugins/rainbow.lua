@@ -1,1 +1,4 @@
-return { "hiphish/rainbow-delimiters.nvim", enabled = true }
+return {
+    "hiphish/rainbow-delimiters.nvim",
+    event = "BufRead",
+}

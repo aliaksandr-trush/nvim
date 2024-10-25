@@ -11,7 +11,7 @@ return {
         options = {
             icons_enabled = true,
             -- theme = 'auto',
-            theme = 'auto',
+            theme = 'kanagawa',
         },
         sections = {
             lualine_c = {
@@ -21,6 +21,9 @@ return {
                 },
                 "macro_recording"
             },
+        },
+        inactive_sections = {
+            lualine_c = { { "filename", path = 4, } },
         },
     },
 }

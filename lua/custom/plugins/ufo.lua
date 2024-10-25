@@ -29,7 +29,7 @@ end
 return {
   'kevinhwang91/nvim-ufo',
   dependencies = { 'kevinhwang91/promise-async' },
-  event = "BufRead",
+  event = "BufReadPost",
   config = function()
     -- Fold options
     -- vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]

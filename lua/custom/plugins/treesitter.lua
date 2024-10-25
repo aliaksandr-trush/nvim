@@ -1,6 +1,7 @@
 return {
   -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
+  event = "VeryLazy",
   dependencies = {
     'nvim-treesitter/nvim-treesitter-textobjects',
     'nvim-treesitter/nvim-treesitter-context'
@@ -9,7 +10,7 @@ return {
   config = function()
     require('nvim-treesitter.configs').setup {
       -- Autoinstall languages that are not installed. Defaults to true
-      ensure_installed = { 'lua', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
       auto_install = true,
       highlight = { enable = true },
       indent = {

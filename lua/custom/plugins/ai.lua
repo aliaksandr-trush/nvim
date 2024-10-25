@@ -2,6 +2,7 @@ return {
     {
         "Exafunction/codeium.nvim",
         -- dev = true,
+        event = "BufRead",
         dependencies = {
             "nvim-lua/plenary.nvim",
             "hrsh7th/nvim-cmp",

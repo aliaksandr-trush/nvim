@@ -1,7 +1,12 @@
 return {
   -- Git related plugins
-  'tpope/vim-fugitive',
+  {
+    'tpope/vim-fugitive',
+    event = 'BufRead',
+  },
+  {
   'tpope/vim-rhubarb',
+    event = 'BufRead',
   {
     "kdheepak/lazygit.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -16,6 +21,7 @@ return {
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
+    event = 'BufRead',
     opts = {
       -- See `:help gitsigns.txt`
       signs = {

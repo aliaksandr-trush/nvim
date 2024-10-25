@@ -12,7 +12,10 @@ require 'lazy-bootstrap'
 require('lazy').setup({
 
   -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-sleuth',
+  {
+    'tpope/vim-sleuth',
+    event = "BufRead",
+  },
 
 
 

@@ -2,6 +2,7 @@ return {
   -- Useful plugin to show you pending keybinds.
   'folke/which-key.nvim',
   dependencies = { "nvim-tree/nvim-web-devicons" },
+  event = "VeryLazy",
   config = function()
     -- document existing key chains
     local wk = require('which-key')
