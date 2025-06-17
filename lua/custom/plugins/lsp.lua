@@ -1,124 +1,68 @@
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(event)
+    local nmap = function(keys, func, desc)
+      if desc then
+        desc = 'LSP: ' .. desc
+      end
+      vim.keymap.set('n', keys, func, { buffer = event.buf, desc = desc })
+    end
+
+    nmap('grr', require('telescope.builtin').lsp_references, 'References')
+    nmap('grd', require('telescope.builtin').lsp_definitions, 'Definition')
+    nmap('gri', require('telescope.builtin').lsp_implementations, 'Implementation')
+    nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+    nmap('grt', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+    nmap('gO', require('telescope.builtin').lsp_document_symbols, 'Document Symbols')
+    nmap('gW', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+
+    nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+
+    -- Lesser used LSP functionality
+    nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+    nmap('grwa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+    nmap('grwr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+    nmap('grwl', function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, '[W]orkspace [L]ist Folders')
+
+    nmap('grf', vim.lsp.buf.format, '[C]ode [F]ormat')
+
+    if vim.lsp.inlay_hint then
+      nmap('<leader>th', function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled {})
+      end, '[T]oggle [H]ints')
+    end
+
+    -- Create a command `:Format` local to the LSP buffer
+    vim.api.nvim_buf_create_user_command(event.buf, 'Format', function(_)
+      vim.lsp.buf.format()
+    end, { desc = 'Format current buffer with LSP' })
+  end,
+})
+
 return {
   -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
+  event = 'VeryLazy',
   dependencies = {
-    -- Automatically install LSPs to stdpath for neovim
-    'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim',
+    {
+      'williamboman/mason.nvim',
+      opts = { ui = { border = 'rounded', } },
+    },
+    -- 'williamboman/mason-lspconfig.nvim',
 
-    -- Useful status updates for LSP
+    -- Status updates for LSP
     { 'j-hui/fidget.nvim',    opts = {} },
 
-    -- Additional lua configuration, makes nvim stuff amazing!
-    {
-      'folke/lazydev.nvim',
-      opts = {
-        library = { 'luvit-meta/library' }
-      },
-      ft = 'lua'
-    },
-    { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
   },
-  config = function()
-    vim.api.nvim_create_autocmd('LspAttach', {
-      callback = function(event)
-        local nmap = function(keys, func, desc)
-          if desc then
-            desc = 'LSP: ' .. desc
-          end
 
-          vim.keymap.set('n', keys, func, { buffer = event.buf, desc = desc })
-        end
-        nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-        nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
-        nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-        nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-        nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-        nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-        nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-        nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
-        -- See `:help K` for why this keymap
-        nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-        nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-        -- Lesser used LSP functionality
-        nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-        nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-        nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-        nmap('<leader>wl', function()
-          print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end, '[W]orkspace [L]ist Folders')
-        nmap('<leader>cf', vim.lsp.buf.format, '[C]ode [F]ormat')
-        if vim.lsp.inlay_hint then
-          nmap('<leader>th', function()
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
-          end, '[T]oggle [H]ints')
-        end
-
-        -- Create a command `:Format` local to the LSP buffer
-        vim.api.nvim_buf_create_user_command(event.buf, 'Format', function(_)
-          vim.lsp.buf.format()
-        end, { desc = 'Format current buffer with LSP' })
-      end,
-    })
-
-    -- mason-lspconfig requires that these setup functions are called in this order
-    -- before setting up the servers.
-    require('mason').setup()
-    require('mason-lspconfig').setup()
-
-    -- Enable the following language servers
-    --
-    --  Add any additional override configuration in the following tables. They will be passed to
-    --  the `settings` field of the server config. You must look up that documentation yourself.
-    --
-    --  If you want to override the default filetypes that your language server will attach to you can
-    --  define the property 'filetypes' to the map in question.
-    local servers = {
-      gopls = {},
-      basedpyright = {},
-      ruff_lsp = {},
-      ruff = {},
-      rust_analyzer = {
-        Cargo = { targetDir = true },
-      },
-
-      lua_ls = {
-        Lua = {
-          workspace = { checkThirdParty = false },
-          telemetry = { enable = false },
-          -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-          diagnostics = { disable = { 'missing-fields' } },
-        },
-      },
-    }
-
-    -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-    -- Add folding capabilities required by ufo.nvim
-    capabilities.textDocument.foldingRange = {
-      dynamicRegistration = false,
-      lineFoldingOnly = true,
-    }
-    require('mason-lspconfig').setup {
-      ensure_installed = vim.tbl_keys(servers),
-      handlers = {
-        function(server_name)
-          local server = servers[server_name] or {}
-          require('lspconfig')[server_name].setup {
-            cmd = server.cmd,
-            settings = server.settings,
-            filetypes = server.filetypes,
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for tsserver)
-            capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {}),
-          }
-        end,
-      },
-    }
-  end,
+  -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+  -- capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+  -- capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
+  -- Add folding capabilities required by ufo.nvim
+  -- capabilities.textDocument.foldingRange = {
+  --   dynamicRegistration = false,
+  --   lineFoldingOnly = true,
+  -- }
+  -- end,
 }
