@@ -1,9 +1,8 @@
-vim.o.matchpairs = "(:),{:},[:],<:>"
+vim.o.matchpairs = '(:),{:},[:],<:>'
 
 vim.o.showtabline = 1
 vim.o.cursorline = true
 vim.o.so = 5
-
 
 -- Set highlight on search
 vim.o.hlsearch = true
@@ -11,7 +10,7 @@ vim.o.ignorecase = true
 
 -- Make line numbers default
 vim.wo.number = true
-vim.wo.relativenumber = true
+-- vim.wo.relativenumber = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -41,7 +40,7 @@ vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Keep signcolumn on by default
-vim.wo.signcolumn = 'yes'
+vim.wo.signcolumn = 'yes:1'
 
 -- Decrease update time
 vim.o.updatetime = 250
@@ -52,9 +51,25 @@ vim.o.completeopt = 'menuone,noselect'
 
 vim.opt.inccommand = 'split'
 
--- NOTE: You should make sure your terminal supports this
--- vim.o.termguicolors = true
-vim.o.colorcolumn = "80"
+vim.o.termguicolors = true
+-- vim.o.colorcolumn = '80'
 
 vim.o.splitbelow = true
 vim.o.splitright = true
+
+vim.diagnostic.config({
+  virtual_text = {
+    severity = {
+      max = vim.diagnostic.severity.WARN,
+    },
+  },
+  virtual_lines = {
+    severity = {
+      min = vim.diagnostic.severity.ERROR,
+    },
+  },
+})
+
+-- vim.o.foldmethod = 'expr'
+-- vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+-- vim.o.foldlevelstart = 3
