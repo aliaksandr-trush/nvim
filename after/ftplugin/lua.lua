@@ -1,5 +1,3 @@
-vim.cmd('setlocal colorcolumn=80')
-
 local setlocal = vim.opt_local
 
 setlocal.expandtab = true
