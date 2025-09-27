@@ -2,11 +2,12 @@ return {
   -- Git related plugins
   {
     'tpope/vim-fugitive',
-    event = 'BufRead',
+    event = 'VeryLazy',
   },
   {
-  'tpope/vim-rhubarb',
-    event = 'BufRead',
+    'tpope/vim-rhubarb',
+    event = 'VeryLazy',
+  },
   {
     "kdheepak/lazygit.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -21,7 +22,7 @@ return {
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
-    event = 'BufRead',
+    event = 'VeryLazy',
     opts = {
       -- See `:help gitsigns.txt`
       signs = {
@@ -90,8 +91,8 @@ return {
         end, { desc = 'git diff against last commit' })
 
         -- Toggles
-        map('n', '<leader>tb', gs.toggle_current_line_blame, { desc = 'toggle git blame line' })
-        map('n', '<leader>td', gs.toggle_deleted, { desc = 'toggle git show deleted' })
+        map('n', '<leader>gb', gs.toggle_current_line_blame, { desc = 'toggle git blame line' })
+        map('n', '<leader>gd', gs.toggle_deleted, { desc = 'toggle git show deleted' })
 
         -- Text object
         map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select git hunk' })

@@ -14,7 +14,7 @@ require('lazy').setup({
   {
     -- 'tpope/vim-sleuth',
     'nmac427/guess-indent.nvim',
-    event = {'BufRead', 'BufNewFile'},
+    event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
   {
@@ -22,10 +22,13 @@ require('lazy').setup({
     event = 'VeryLazy',
     opts = {},
   },
-
-  -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.lint',
-
+  {
+    'kevinhwang91/nvim-bqf',
+    ft = 'qf',
+    dependencies = {
+      'junegunn/fzf',
+    },
+  },
   { import = 'custom.plugins' },
 }, {
   dev = { path = '~/Projects/' },
@@ -48,18 +51,18 @@ vim.filetype.add {
 local servers = {
   'clangd',
   'gopls',
-  'basedpyright',
+  -- 'basedpyright',
   'ruff',
   'rust_analyzer',
   'lua_ls',
   'ty',
+  -- 'zuban',
   'textlsp',
 }
 
 vim.lsp.enable(servers)
 
 vim.cmd.colorscheme 'kanagawa'
--- vim.cmd.colorscheme 'tokyonight'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

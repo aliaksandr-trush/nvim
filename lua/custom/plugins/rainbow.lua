@@ -1,4 +1,4 @@
 return {
-    "hiphish/rainbow-delimiters.nvim",
-    event = "BufRead",
+  'hiphish/rainbow-delimiters.nvim',
+  event = {'BufRead', 'BufNewFile'},
 }

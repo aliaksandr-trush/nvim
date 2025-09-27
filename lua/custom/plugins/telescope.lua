@@ -1,7 +1,6 @@
 return {
   'nvim-telescope/telescope.nvim',
-  event = "VeryLazy",
-  branch = '0.1.x',
+  event = 'VeryLazy',
   dependencies = {
     'nvim-lua/plenary.nvim',
     -- Fuzzy Finder Algorithm which requires local dependencies to be built.
@@ -9,8 +8,6 @@ return {
     -- requirements installed.
     {
       'nvim-telescope/telescope-fzf-native.nvim',
-      -- NOTE: If you are having trouble with this installation,
-      --       refer to the README for telescope-fzf-native for more instructions.
       build = 'make',
       cond = function()
         return vim.fn.executable 'make' == 1
@@ -25,10 +22,10 @@ return {
         buffers = {
           mappings = {
             i = {
-              ["<C-d>"] = "delete_buffer",
+              ['<C-d>'] = 'delete_buffer',
             },
             n = {
-              ["d"] = "delete_buffer",
+              ['d'] = 'delete_buffer',
             },
           },
         },
@@ -49,6 +46,7 @@ return {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
         },
+        fzf = {},
       },
     }
 

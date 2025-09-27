@@ -29,7 +29,6 @@ end
 return {
   'kevinhwang91/nvim-ufo',
   dependencies = { 'kevinhwang91/promise-async' },
-  event = "BufReadPost",
   config = function()
     -- Fold options
     -- vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
@@ -50,5 +49,6 @@ return {
     vim.keymap.set('n', 'zM', ufo.closeAllFolds)
     vim.keymap.set('n', 'zr', ufo.openFoldsExceptKinds)
     vim.keymap.set('n', 'zm', ufo.closeFoldsWith)
+  event = {'BufReadPost', 'BufNewFile'},
   end,
 }

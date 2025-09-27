@@ -1,6 +1,8 @@
 return {
-  { 'echasnovski/mini.cursorword',
-    event = "BufRead",
+  {
+    'echasnovski/mini.cursorword',
+    event = { 'BufRead', 'BufNewFile' },
     version = '*',
-    opts = {} },
+    opts = {}
+  },
 }
