@@ -43,8 +43,6 @@ vim.keymap.set('n', '<A-p>', vim.cmd.tabp, { desc = 'Previous tab' })
 
 vim.keymap.set('n', '<leader>xq', vim.cmd.copen, { desc = 'Open quickfix list' })
 vim.keymap.set('n', '<leader>q', vim.cmd.copen, { desc = 'Open quickfix list' })
-vim.keymap.set('n', ']q', vim.cmd.cnext, { desc = 'Next quickfix' })
-vim.keymap.set('n', '[q', vim.cmd.cprevious, { desc = 'Previous quickfix' })
 
 vim.keymap.set('n', '<leader>xl', vim.cmd.lopen, { desc = 'Open location list' })
 vim.keymap.set('n', '<leader>l', vim.cmd.lopen, { desc = 'Open location list' })
@@ -56,4 +54,14 @@ vim.keymap.set('n', '<leader>dd', vim.diagnostic.setloclist, { desc = 'Document 
 vim.keymap.set('n', '<localleader>d', vim.diagnostic.setloclist, { desc = 'Document diagnostics' })
 vim.keymap.set('n', '<leader>wd', vim.diagnostic.setqflist, { desc = 'Workspace diagnostics' })
 
-vim.keymap.set('n', '<leader>td', function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, {desc = 'Toggle diagnostics'})
+vim.keymap.set('n', '<leader>td', function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { desc = 'Toggle diagnostics' })
+
+vim.keymap.set('n', '<leader>tt', function()
+  if vim.o.background == 'dark' then
+    vim.o.background = 'light'
+  else
+    vim.o.background = 'dark'
+  end
+end, { desc = 'Toggle Theme' })
