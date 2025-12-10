@@ -24,10 +24,19 @@ require('lazy').setup({
   },
   {
     'kevinhwang91/nvim-bqf',
+    -- enabled = false,
     ft = 'qf',
     dependencies = {
       'junegunn/fzf',
     },
+  },
+  {
+    'stevearc/quicker.nvim',
+    ft = "qf",
+    -- enabled = false,
+    ---@module "quicker"
+    ---@type quicker.SetupOptions
+    opts = {},
   },
   { import = 'custom.plugins' },
 }, {
@@ -58,6 +67,9 @@ local servers = {
   'ty',
   -- 'zuban',
   'textlsp',
+  -- 'copilot',
+  'ruby_lsp',
+  'just',
 }
 
 vim.lsp.enable(servers)
