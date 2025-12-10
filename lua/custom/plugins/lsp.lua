@@ -7,18 +7,26 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.keymap.set('n', keys, func, { buffer = event.buf, desc = desc })
     end
 
-    nmap('grr', require('telescope.builtin').lsp_references, 'References')
-    nmap('grd', require('telescope.builtin').lsp_definitions, 'Definition')
-    nmap('gri', require('telescope.builtin').lsp_implementations, 'Implementation')
-    nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-    nmap('grt', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-    nmap('gO', require('telescope.builtin').lsp_document_symbols, 'Document Symbols')
-    nmap('gW', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+    -- nmap('grr', require('telescope.builtin').lsp_references, 'References')
+    -- nmap('grd', require('telescope.builtin').lsp_definitions, 'Definition')
+    -- -- nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+    -- nmap('gri', require('telescope.builtin').lsp_implementations, 'Implementation')
+    -- nmap('grt', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+    -- nmap('gO', require('telescope.builtin').lsp_document_symbols, 'Document Symbols')
+    -- nmap('gW', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
+    local builtin = require 'fzf-lua'
+    nmap('grr', builtin.lsp_references, 'References')
+    nmap('grd', builtin.lsp_definitions, 'Definition')
+    -- nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+    nmap('gri', builtin.lsp_implementations, 'Implementation')
+    nmap('grt', builtin.lsp_typedefs, 'Type [D]efinition')
+    nmap('gO', builtin.lsp_document_symbols, 'Document Symbols')
+    nmap('gW', builtin.lsp_workspace_symbols, '[W]orkspace [S]ymbols')
     nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
     -- Lesser used LSP functionality
-    nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+    -- nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
     nmap('grwa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
     nmap('grwr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
     nmap('grwl', function()
@@ -47,13 +55,22 @@ return {
   dependencies = {
     {
       'williamboman/mason.nvim',
-      opts = { ui = { border = 'rounded', } },
+      opts = { ui = { border = 'rounded' } },
     },
     -- 'williamboman/mason-lspconfig.nvim',
 
     -- Status updates for LSP
-    { 'j-hui/fidget.nvim',    opts = {} },
-
+    {
+      'j-hui/fidget.nvim',
+      -- enabled = false,
+      opts = {
+        -- notification = {
+        --     window = {
+        --         border = 'rounded',
+        --     },
+        -- },
+      },
+    },
   },
 
   -- local capabilities = vim.lsp.protocol.make_client_capabilities()

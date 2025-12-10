@@ -9,15 +9,16 @@ return {
     event = 'VeryLazy',
   },
   {
-    "kdheepak/lazygit.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    'kdheepak/lazygit.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
     keys = {
-      { '<leader>gl', "<cmd>lua require('lazygit').lazygit()<cr>", desc = 'Open [G]it\'s [L]azygit' },
+      { '<leader>gl', "<cmd>lua require('lazygit').lazygit()<cr>", desc = "Open [G]it's [L]azygit" },
     },
     config = function()
-      vim.g.lazygit_floating_window_use_plenary = 1
+      -- vim.g.lazygit_floating_window_use_plenary = 1
       vim.g.lazygit_use_neovim_remote = 0
-    end
+      -- vim.g.lazygit_floating_window_border_chars = {'╭','─', '╮', '│', '╯','─', '╰', '│'}
+    end,
   },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
@@ -25,6 +26,7 @@ return {
     event = 'VeryLazy',
     opts = {
       -- See `:help gitsigns.txt`
+      numhl = true,
       signs = {
         add = { text = '+' },
         change = { text = '~' },
@@ -33,9 +35,6 @@ return {
         changedelete = { text = '~' },
       },
       on_attach = function(bufnr)
-        vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
-        vim.keymap.set('n', '<leader>hb', require('gitsigns').toggle_current_line_blame,
-          { buffer = bufnr, desc = 'Preview git blame' })
 
         -- don't override the built-in and fugitive keymaps
         local gs = package.loaded.gitsigns
@@ -52,7 +51,8 @@ return {
             return ']c'
           end
           vim.schedule(function()
-            gs.next_hunk()
+            -- gs.next_hunk()
+            gs.nav_hunk 'next'
           end)
           return '<Ignore>'
         end, { expr = true, desc = 'Jump to next hunk' })
@@ -62,7 +62,8 @@ return {
             return '[c'
           end
           vim.schedule(function()
-            gs.prev_hunk()
+            -- gs.prev_hunk()
+            gs.nav_hunk 'prev'
           end)
           return '<Ignore>'
         end, { expr = true, desc = 'Jump to previous hunk' })
@@ -93,10 +94,36 @@ return {
         -- Toggles
         map('n', '<leader>gb', gs.toggle_current_line_blame, { desc = 'toggle git blame line' })
         map('n', '<leader>gd', gs.toggle_deleted, { desc = 'toggle git show deleted' })
+        -- vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
+        -- vim.keymap.set('n', '<leader>hb', require('gitsigns').toggle_current_line_blame, { buffer = bufnr, desc = 'Preview git blame' })
 
         -- Text object
         map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select git hunk' })
       end,
     },
+  },
+  -- { 'sindrets/diffview.nvim' },
+  {
+    'NeogitOrg/neogit',
+    -- enabled = false,
+    event = 'VeryLazy',
+    dependencies = {
+      'nvim-lua/plenary.nvim', -- required
+      'sindrets/diffview.nvim', -- optional - Diff integration
+      "ibhagwan/fzf-lua",              -- optional
+      -- Only one of these is needed.
+      -- 'nvim-telescope/telescope.nvim', -- optional
+    },
+    opts = {
+      integrations = {
+        fzf_lua = true,
+        diffview = true,
+      },
+      graph_style = "unicode",
+    },
+    keys = {
+      { '<leader>gg', function() require('neogit').open() end, desc = "Open [G]it's [G]it" },
+    },
+
   },
 }

@@ -1,37 +1,45 @@
 return {
-  { "sainnhe/edge" },
-  { "sainnhe/everforest" },
-  { "sainnhe/gruvbox-material" },
   {
-    "rebelot/kanagawa.nvim",
+    'webhooked/kanso.nvim',
+    enabled = false,
+    -- lazy = false,
+    event = 'VeryLazy',
+    priority = 1000,
+  },
+  {
+    'rebelot/kanagawa.nvim',
+    -- "aliaksandr-trush/kanagawa.nvim",
+    dev = true,
     priority = 1000,
     lazy = false,
+    build = ':KanagawaCompile',
     opts = {
       -- transparent = true,
-      compile = true,
+      -- compile = true,
+      dimInactive = true,
     },
   },
-  { "EdenEast/nightfox.nvim" },
   {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
+    'folke/tokyonight.nvim',
+    -- lazy = false,
+    enabled = false,
+    event = 'VeryLazy',
     opts = {},
   },
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000,
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    enabled = false,
+    event = 'VeryLazy',
     opts = {
       -- transparent_background = true,
       integrations = {
         notify = true,
-      }
+        rainbow_delimiters = true,
+        indent_blankline = {
+          colored_indent_levels = true,
+        },
+      },
     },
-  },
-  {
-    "Mofiqul/adwaita.nvim",
-    lazy = false,
-    priority = 1000,
   },
 }

@@ -35,7 +35,17 @@ return {
       "<leader>xt",
       "<cmd>Trouble todo toggle<cr>",
       desc = "Todo List (Trouble)",
-    }
+    },
+    -- {
+    --   "]q",
+    --   "<cmd>Trouble quickfix next<cr>",
+    --   desc = "Next Quickfix",
+    -- },
+    -- {
+    --   "[q",
+    --   "<cmd>Trouble quickfix previous<cr>",
+    --   desc = "Previous Quickfix",
+    -- },
   },
   opts = {
     auto_preview = false,
