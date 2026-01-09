@@ -9,7 +9,7 @@
 return {
   'mfussenegger/nvim-dap',
   enabled = true,
-  event = 'VeryLazy',
+  event = 'BufReadPost',
   dependencies = {
     -- Creates a beautiful debugger UI
     {

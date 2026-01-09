@@ -17,12 +17,13 @@ return {
         desc = "Diff file",
       },
     },
+    float = { border = "rounded" },
   },
   dependencies = { "nvim-tree/nvim-web-devicons" },
   keys = {
     -- { "-", "<cmd>lua require('oil').open_float()<cr>", desc = "Oil" },
     { "-", function()
-            require('oil').open_float(nil, {preview = { split = "belowright" }})
+            require('oil').open_float()
         end, desc = "Oil" },
   },
 }
