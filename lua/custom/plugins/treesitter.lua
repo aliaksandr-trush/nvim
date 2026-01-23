@@ -1,93 +1,64 @@
 return {
-  -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
-  -- dev = true,
   event = 'VeryLazy',
-  -- lazy = false,
-  -- branch = 'main',
+  branch = 'main',
+  build = ':TSUpdate',
   dependencies = {
-    'nvim-treesitter/nvim-treesitter-textobjects',
     {
       'nvim-treesitter/nvim-treesitter-context',
       opts = {},
     },
+    {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      branch = 'main',
+      config = function()
+        vim.keymap.set({ 'x', 'o' }, 'af', function()
+          require('nvim-treesitter-textobjects.select').select_textobject('@function.outer', 'textobjects')
+        end)
+        vim.keymap.set({ 'x', 'o' }, 'if', function()
+          require('nvim-treesitter-textobjects.select').select_textobject('@function.inner', 'textobjects')
+        end)
+        vim.keymap.set({ 'x', 'o' }, 'ac', function()
+          require('nvim-treesitter-textobjects.select').select_textobject('@class.outer', 'textobjects')
+        end)
+        vim.keymap.set({ 'x', 'o' }, 'ic', function()
+          require('nvim-treesitter-textobjects.select').select_textobject('@class.inner', 'textobjects')
+        end)
+        vim.keymap.set({ 'n', 'x', 'o' }, ']m', function()
+          require('nvim-treesitter-textobjects.move').goto_next_start('@function.outer', 'textobjects')
+        end)
+        vim.keymap.set({ 'n', 'x', 'o' }, ']]', function()
+          require('nvim-treesitter-textobjects.move').goto_next_start('@class.outer', 'textobjects')
+        end)
+        vim.keymap.set({ 'n', 'x', 'o' }, ']M', function()
+          require('nvim-treesitter-textobjects.move').goto_next_end('@function.outer', 'textobjects')
+        end)
+        vim.keymap.set({ 'n', 'x', 'o' }, '][', function()
+          require('nvim-treesitter-textobjects.move').goto_next_end('@class.outer', 'textobjects')
+        end)
+
+        vim.keymap.set({ 'n', 'x', 'o' }, '[m', function()
+          require('nvim-treesitter-textobjects.move').goto_previous_start('@function.outer', 'textobjects')
+        end)
+        vim.keymap.set({ 'n', 'x', 'o' }, '[[', function()
+          require('nvim-treesitter-textobjects.move').goto_previous_start('@class.outer', 'textobjects')
+        end)
+
+        vim.keymap.set({ 'n', 'x', 'o' }, '[M', function()
+          require('nvim-treesitter-textobjects.move').goto_previous_end('@function.outer', 'textobjects')
+        end)
+        vim.keymap.set({ 'n', 'x', 'o' }, '[]', function()
+          require('nvim-treesitter-textobjects.move').goto_previous_end('@class.outer', 'textobjects')
+        end)
+
+        vim.api.nvim_create_user_command('TSStart', function()
+          vim.treesitter.start()
+        end, { desc = 'Start treesitter' })
+
+        vim.api.nvim_create_user_command('TSStop', function()
+          vim.treesitter.stop()
+        end, { desc = 'Stop treesitter' })
+      end,
+    },
   },
-  build = ':TSUpdate',
-  -- config = function()
-  --   install_dir = vim.fn.stdpath 'data' .. '/site'
-  -- end,
-  config = function()
-    ---@diagnostic disable-next-line: missing-fields
-    require('nvim-treesitter.configs').setup {
-      -- Autoinstall languages that are not installed. Defaults to true
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
-      -- ignore_install = { 'org' },
-      -- auto_install = true,
-      highlight = {
-        enable = true,
-        disable = { 'tmux' },
-      },
-      indent = {
-        enable = true,
-        disable = { 'python', 'org' },
-      },
-      textobjects = {
-        select = {
-          enable = true,
-          lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-          keymaps = {
-            -- You can use the capture groups defined in textobjects.scm
-            ['aa'] = '@parameter.outer',
-            ['ia'] = '@parameter.inner',
-            ['af'] = '@function.outer',
-            ['if'] = '@function.inner',
-            ['ac'] = '@class.outer',
-            ['ic'] = '@class.inner',
-          },
-        },
-        swap = {
-          enable = true,
-          swap_next = {
-            ['<leader>aa'] = '@parameter.inner',
-            ['<leader>af'] = '@function.outer',
-            ['<leader>ac'] = '@class.outer',
-          },
-          swap_previous = {
-            ['<leader>aA'] = '@parameter.inner',
-            ['<leader>aF'] = '@function.outer',
-            ['<leader>aC'] = '@class.outer',
-          },
-        },
-        move = {
-          enable = true,
-          set_jumps = true, -- whether to set jumps in the jumplist
-          goto_next_start = {
-            [']m'] = '@function.outer',
-            [']]'] = '@class.outer',
-          },
-          goto_next_end = {
-            [']M'] = '@function.outer',
-            [']['] = '@class.outer',
-          },
-          goto_previous_start = {
-            ['[m'] = '@function.outer',
-            ['[['] = '@class.outer',
-          },
-          goto_previous_end = {
-            ['[M'] = '@function.outer',
-            ['[]'] = '@class.outer',
-          },
-        },
-        lsp_interop = {
-          enable = true,
-          -- border = 'none',
-          floating_preview_opts = {},
-          peek_definition_code = {
-            ['<leader>df'] = '@function.outer',
-            ['<leader>dF'] = '@class.outer',
-          },
-        },
-      },
-    }
-  end,
 }
