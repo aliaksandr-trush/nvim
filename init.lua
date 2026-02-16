@@ -56,23 +56,6 @@ vim.filetype.add {
   },
 }
 
-local servers = {
-  'clangd',
-  'gopls',
-  -- 'basedpyright',
-  'ruff',
-  'rust_analyzer',
-  'lua_ls',
-  'ty',
-  -- 'zuban',
-  'textlsp',
-  -- 'copilot',
-  'ruby_lsp',
-  'just',
-}
-
-vim.lsp.enable(servers)
-
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
