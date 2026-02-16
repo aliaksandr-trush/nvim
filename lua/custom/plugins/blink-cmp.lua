@@ -45,8 +45,8 @@ return {
     signature = { enabled = true },
 
     -- appearance = {
-      -- use_nvim_cmp_as_default = true,
-      -- nerd_font_variant = 'mono',
+    -- use_nvim_cmp_as_default = true,
+    -- nerd_font_variant = 'mono',
     -- },
     completion = {
       list = {
@@ -55,17 +55,19 @@ return {
           -- selection = function (ctx)
           --   return ctx.mode == 'cmdline' and 'auto_insert' or 'preselect'
           -- end
-            preselect = function(ctx)
-              return ctx.mode ~= 'cmdline' and not require('blink.cmp').snippet_active({ direction = 1 })
-            end,
-            auto_insert = function(ctx) return ctx.mode == 'cmdline' end,
+          preselect = function(ctx)
+            return ctx.mode ~= 'cmdline' and not require('blink.cmp').snippet_active { direction = 1 }
+          end,
+          auto_insert = function(ctx)
+            return ctx.mode == 'cmdline'
+          end,
         },
       },
       menu = {
         draw = {
           columns = {
-            {'kind_icon'},
-            {'label', 'label_description', gap = 1 },
+            { 'kind_icon' },
+            { 'label', 'label_description', gap = 1 },
           },
 
           -- components = {
@@ -86,7 +88,7 @@ return {
     },
 
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer', 'codeium'},
+      default = { 'lsp', 'path', 'snippets', 'buffer', 'codeium' },
       per_filetype = {
         sql = { 'snippets', 'dadbod', 'buffer' },
         mysql = { 'snippets', 'dadbod', 'buffer' },
@@ -117,4 +119,3 @@ return {
   -- without having to redefining it
   opts_extend = { 'sources.completion.enabled_providers' },
 }
-

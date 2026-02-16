@@ -53,11 +53,12 @@ vim.opt.inccommand = 'split'
 
 vim.o.termguicolors = true
 -- vim.o.colorcolumn = '80'
+vim.o.winborder = 'rounded'
 
 vim.o.splitbelow = true
 vim.o.splitright = true
 
-vim.diagnostic.config({
+vim.diagnostic.config {
   virtual_text = {
     severity = {
       max = vim.diagnostic.severity.WARN,
@@ -68,7 +69,7 @@ vim.diagnostic.config({
       min = vim.diagnostic.severity.ERROR,
     },
   },
-})
+}
 
 -- vim.o.foldmethod = 'expr'
 -- vim.o.foldexpr = 'nvim_treesitter#foldexpr()'

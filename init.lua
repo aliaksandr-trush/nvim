@@ -28,15 +28,14 @@ require('lazy').setup({
     ft = 'qf',
     dependencies = {
       'junegunn/fzf',
+      {
+        'stevearc/quicker.nvim',
+        -- ft = 'qf',
+        ---@module "quicker"
+        ---@type quicker.SetupOptions
+        opts = {},
+      },
     },
-  },
-  {
-    'stevearc/quicker.nvim',
-    ft = "qf",
-    -- enabled = false,
-    ---@module "quicker"
-    ---@type quicker.SetupOptions
-    opts = {},
   },
   { import = 'custom.plugins' },
 }, {
@@ -74,7 +73,6 @@ local servers = {
 
 vim.lsp.enable(servers)
 
-vim.cmd.colorscheme 'kanagawa'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

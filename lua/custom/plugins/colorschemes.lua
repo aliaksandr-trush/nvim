@@ -15,9 +15,12 @@ return {
     build = ':KanagawaCompile',
     opts = {
       -- transparent = true,
-      -- compile = true,
+      compile = true,
       dimInactive = true,
     },
+    config = function()
+      vim.cmd.colorscheme 'kanagawa'
+    end,
   },
   {
     'folke/tokyonight.nvim',

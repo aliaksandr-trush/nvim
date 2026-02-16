@@ -2,12 +2,9 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     event = 'VeryLazy',
-    -- branch = '0.1.x',
+    enabled = false,
     dependencies = {
       'nvim-lua/plenary.nvim',
-      -- Fuzzy Finder Algorithm which requires local dependencies to be built.
-      -- Only load if `make` is available. Make sure you have the system
-      -- requirements installed.
       {
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
@@ -63,7 +60,7 @@ return {
       -- pcall(require('telescope').load_extension, 'frecency')
       --
       -- See `:help telescope.builtin`
-      local builtin = require 'telescope.builtin'
+      -- local builtin = require 'telescope.builtin'
 
       -- vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = 'Find recently opened files' })
       -- -- vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
@@ -94,10 +91,7 @@ return {
   },
   {
     'ibhagwan/fzf-lua',
-    -- optional for icon support
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    --     -- or if using mini.icons/mini.nvim
-    --       -- dependencies = { "nvim-mini/mini.icons" },
     opts = {},
     config = function()
       local builtin = require 'fzf-lua'
