@@ -35,7 +35,6 @@ return {
         changedelete = { text = '~' },
       },
       on_attach = function(bufnr)
-
         -- don't override the built-in and fugitive keymaps
         local gs = package.loaded.gitsigns
 
@@ -51,7 +50,6 @@ return {
             return ']c'
           end
           vim.schedule(function()
-            -- gs.next_hunk()
             gs.nav_hunk 'next'
           end)
           return '<Ignore>'
@@ -62,7 +60,6 @@ return {
             return '[c'
           end
           vim.schedule(function()
-            -- gs.prev_hunk()
             gs.nav_hunk 'prev'
           end)
           return '<Ignore>'
@@ -76,26 +73,30 @@ return {
         map('v', '<leader>hr', function()
           gs.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
         end, { desc = 'reset git hunk' })
+
         -- normal mode
         map('n', '<leader>hs', gs.stage_hunk, { desc = 'git stage hunk' })
         map('n', '<leader>hr', gs.reset_hunk, { desc = 'git reset hunk' })
         map('n', '<leader>hS', gs.stage_buffer, { desc = 'git Stage buffer' })
-        map('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'undo stage hunk' })
         map('n', '<leader>hR', gs.reset_buffer, { desc = 'git Reset buffer' })
         map('n', '<leader>hp', gs.preview_hunk, { desc = 'preview git hunk' })
+        map('n', '<leader>hi', gs.preview_hunk_inline, { desc = 'preview git hunk' })
         map('n', '<leader>hb', function()
-          gs.blame_line { full = false }
+          gs.blame_line { full = true }
         end, { desc = 'git blame line' })
         map('n', '<leader>hd', gs.diffthis, { desc = 'git diff against index' })
         map('n', '<leader>hD', function()
           gs.diffthis '~'
         end, { desc = 'git diff against last commit' })
 
+        map('n', '<leader>hq', gs.setqflist, { desc = 'set quick fix list' })
+        map('n', '<leader>hQ', function() gs.setqflist('all') end, { desc = 'set quick fix list' })
+
         -- Toggles
-        map('n', '<leader>gb', gs.toggle_current_line_blame, { desc = 'toggle git blame line' })
-        map('n', '<leader>gd', gs.toggle_deleted, { desc = 'toggle git show deleted' })
-        -- vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
-        -- vim.keymap.set('n', '<leader>hb', require('gitsigns').toggle_current_line_blame, { buffer = bufnr, desc = 'Preview git blame' })
+        map('n', '<leader>gb', gs.blame, { desc = 'toggle git blame line' })
+        map('n', '<leader>gw', gs.toggle_word_diff, { desc = 'toggle git show deleted' })
+
+        map({'o', 'x'}, 'ih', gs.select_hunk, { desc = 'select git hunk' })
 
         -- Text object
         map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select git hunk' })
@@ -110,20 +111,26 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
       'sindrets/diffview.nvim', -- optional - Diff integration
-      "ibhagwan/fzf-lua",              -- optional
+      'ibhagwan/fzf-lua', -- optional
       -- Only one of these is needed.
       -- 'nvim-telescope/telescope.nvim', -- optional
     },
     opts = {
+      disable_hint = true,
       integrations = {
         fzf_lua = true,
         diffview = true,
       },
-      graph_style = "unicode",
+      graph_style = 'unicode',
     },
     keys = {
-      { '<leader>gg', function() require('neogit').open() end, desc = "Open [G]it's [G]it" },
+      {
+        '<leader>gg',
+        function()
+          require('neogit').open()
+        end,
+        desc = "Open [G]it's [G]it",
+      },
     },
-
   },
 }
